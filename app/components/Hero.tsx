@@ -2,14 +2,18 @@
 
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import posthog from 'posthog-js';
 
 const Hero = () => {
+  const router = useRouter();
+
   const handleRequestInvitation = () => {
     posthog.capture('cta_clicked', {
       cta_type: 'request_invitation',
       location: 'hero'
     });
+    router.push('/request-invitation');
   };
 
   return (

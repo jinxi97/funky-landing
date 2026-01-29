@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import posthog from 'posthog-js';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
 
   const handleDemoRequest = () => {
     posthog.capture('demo_requested', {
@@ -19,6 +21,7 @@ const Navbar = () => {
       cta_type: 'request_invitation',
       location: 'navbar'
     });
+    router.push('/request-invitation');
   };
 
   const handleMobileMenuToggle = () => {

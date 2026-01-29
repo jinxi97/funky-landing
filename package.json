@@ -9,8 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google-cloud/cloud-sql-connector": "^1.9.0",
+    "google-auth-library": "^10.5.0",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
+    "pg": "^8.17.2",
     "posthog-js": "^1.336.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
