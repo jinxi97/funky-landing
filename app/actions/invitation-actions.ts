@@ -1,10 +1,8 @@
 'use server';
 
 import pg from 'pg';
-import { AuthTypes, Connector } from '@google-cloud/cloud-sql-connector';
-import { GoogleAuth } from 'google-auth-library';
+import { Connector } from '@google-cloud/cloud-sql-connector';
 
-const auth = new GoogleAuth();
 const { Pool } = pg;
 
 let pool: pg.Pool | null = null;
@@ -14,27 +12,26 @@ async function getPool() {
     return pool;
   }
 
-  const projectId = await auth.getProjectId();
+  const instanceConnectionName = process.env.INSTANCE_CONNECTION_NAME;
+  const dbUser = process.env.DB_USER;
+  const dbPassword = process.env.DB_PASSWORD;
+  const dbName = process.env.DB_NAME;
+
+  if (!instanceConnectionName || !dbUser || !dbPassword) {
+    throw new Error('Missing required database configuration. Please check your .env.local file.');
+  }
+
   const connector = new Connector();
   
-  // Get the instance connection name from environment variable or construct it
-  const instanceConnectionName = process.env.INSTANCE_CONNECTION_NAME || 
-    `${projectId}:us-central1:quickstart-instance`;
-  
-  const serviceAccountEmail = process.env.SERVICE_ACCOUNT_EMAIL ||
-    `quickstart-service-account@${projectId}.iam`;
-  
-  const databaseName = process.env.DATABASE_NAME || 'quickstart_db';
-
   const clientOpts = await connector.getOptions({
     instanceConnectionName,
-    authType: AuthTypes.IAM,
   });
 
   pool = new Pool({
     ...clientOpts,
-    user: serviceAccountEmail,
-    database: databaseName,
+    user: dbUser,
+    password: dbPassword,
+    database: dbName,
   });
 
   return pool;
