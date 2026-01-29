@@ -32,6 +32,10 @@ DB_USER=appuser
 DB_PASSWORD=YOUR_SECURE_PASSWORD
 DB_NAME=quickstart_db
 
+# Admin Panel Credentials
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=your-admin-password
+
 # PostHog (if you're using it)
 NEXT_PUBLIC_POSTHOG_KEY=your-posthog-key
 NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
@@ -56,7 +60,7 @@ gcloud run deploy funky-landing \
     --region=us-central1 \
     --source=. \
     --allow-unauthenticated \
-    --set-env-vars="INSTANCE_CONNECTION_NAME=funky-485504:us-central1:free-trial-first-project,DB_USER=appuser,DB_PASSWORD=YOUR_SECURE_PASSWORD,DB_NAME=quickstart_db"
+    --set-env-vars="INSTANCE_CONNECTION_NAME=funky-485504:us-central1:free-trial-first-project,DB_USER=appuser,DB_PASSWORD=YOUR_SECURE_PASSWORD,DB_NAME=quickstart_db,ADMIN_USERNAME=admin,ADMIN_PASSWORD=your-admin-password"
 ```
 
 ⚠️ **Security Note**: For production, use [Secret Manager](https://cloud.google.com/secret-manager) instead of passing passwords directly:
