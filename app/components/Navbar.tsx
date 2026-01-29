@@ -11,6 +11,7 @@ const Navbar = () => {
     posthog.capture('demo_requested', {
       location: 'navbar'
     });
+    window.open('https://cal.com/jason-jin-wmgvju', '_blank', 'noopener,noreferrer');
   };
 
   const handleRequestInvitation = () => {
