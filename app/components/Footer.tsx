@@ -14,6 +14,7 @@ const Footer = () => {
     posthog.capture('discord_clicked', {
       location: 'footer'
     });
+    window.open('https://discord.gg/vNrUwh2XXq', '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -23,9 +24,9 @@ const Footer = () => {
           &copy; 2026 Funky Inc. <span className="mx-2">|</span> Designed for Agents.
         </div>
         <div>
-          <a href="#" onClick={handleDiscordClick} className="text-slate-400 hover:text-slate-900 transition-colors">
+          <button onClick={handleDiscordClick} className="text-slate-400 hover:text-slate-900 transition-colors" aria-label="Join our Discord">
             <DiscordIcon size={20} />
-          </a>
+          </button>
         </div>
       </div>
     </footer>
