@@ -1,7 +1,17 @@
+'use client';
+
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import posthog from 'posthog-js';
 
 const Hero = () => {
+  const handleRequestInvitation = () => {
+    posthog.capture('cta_clicked', {
+      cta_type: 'request_invitation',
+      location: 'hero'
+    });
+  };
+
   return (
     <section className="relative pt-32 pb-20 px-6">
       <div className="max-w-7xl mx-auto text-center">
@@ -28,7 +38,10 @@ const Hero = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-20">
-          <button className="group px-8 py-3 rounded-lg font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-px flex items-center justify-center gap-2">
+          <button
+            onClick={handleRequestInvitation}
+            className="group px-8 py-3 rounded-lg font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-px flex items-center justify-center gap-2"
+          >
             <span>Request Invitation</span>
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </button>

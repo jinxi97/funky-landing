@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import posthog from 'posthog-js';
 
 const DiscordIcon = ({ size = 20 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -7,6 +10,12 @@ const DiscordIcon = ({ size = 20 }: { size?: number }) => (
 );
 
 const Footer = () => {
+  const handleDiscordClick = () => {
+    posthog.capture('discord_clicked', {
+      location: 'footer'
+    });
+  };
+
   return (
     <footer className="border-t border-slate-200 py-12 bg-white">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
@@ -14,7 +23,7 @@ const Footer = () => {
           &copy; 2026 Funky Inc. <span className="mx-2">|</span> Designed for Agents.
         </div>
         <div>
-          <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors">
+          <a href="#" onClick={handleDiscordClick} className="text-slate-400 hover:text-slate-900 transition-colors">
             <DiscordIcon size={20} />
           </a>
         </div>
