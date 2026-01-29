@@ -73,10 +73,10 @@ const Hero = () => {
                   </div>
                   <div className="p-4 overflow-x-auto whitespace-nowrap">
                     <div><span className="text-pink-400">const</span> agent = <span className="text-pink-400">new</span> Agent({`{`}</div>
-                    <div className="pl-4"><span className="text-sky-300">"name"</span>: <span className="text-sky-300">"CalcBot"</span>,</div>
+                    <div className="pl-4"><span className="text-sky-300">"name"</span>: <span className="text-sky-300">"WeatherBot"</span>,</div>
                     <div className="pl-4"><span className="text-sky-300">"tools"</span>: [</div>
                     <div className="pl-8">{`{`}</div>
-                    <div className="pl-12"><span className="text-sky-300">"name"</span>: <span className="text-sky-300">"add"</span>,</div>
+                    <div className="pl-12"><span className="text-sky-300">"name"</span>: <span className="text-sky-300">"get_weather"</span>,</div>
                     <div className="pl-12"><span className="text-sky-300">"schema"</span>: {`{`}</div>
                     <div className="pl-16"><span className="text-sky-300">"type"</span>: <span className="text-sky-300">"object"</span>,</div>
                     <div className="pl-16"><span className="text-slate-500 italic">// ... 200 lines of schema</span></div>
@@ -112,15 +112,16 @@ const Hero = () => {
                     <span className="text-slate-500">terminal</span>
                   </div>
                   <div className="p-4 overflow-x-auto whitespace-nowrap">
-                    <div className="text-slate-500 italic mb-1"># The agent simply reads and runs</div>
-                    <div><span className="text-blue-400">$</span> cat skills.md</div>
-                    <div className="text-slate-400 mb-3">&gt; Use `python add.py` to calculate.</div>
+                    <div className="text-slate-500 italic mb-1"># The agent explores its workspace</div>
+                    <div><span className="text-blue-400">$</span> ls</div>
+                    <div className="text-slate-400 mb-3">skills.md  get_weather.py  start.md</div>
 
-                    <div><span className="text-blue-400">$</span> python add.py 3 5</div>
-                    <div className="text-green-400 mb-3">&gt; 8</div>
+                    <div className="text-slate-500 italic mb-1"># Reads documentation and executes</div>
+                    <div><span className="text-blue-400">$</span> python get_weather.py --city="SF"</div>
+                    <div className="text-green-400 mb-3">&gt; 72°F, Sunny</div>
 
                     <div className="text-slate-500 italic mb-1"># Agent modifies tool autonomously</div>
-                    <div><span className="text-blue-400">$</span> echo "..." &gt; multiply.py</div>
+                    <div><span className="text-blue-400">$</span> echo "..." &gt; forecast.py</div>
                   </div>
                 </div>
               </div>

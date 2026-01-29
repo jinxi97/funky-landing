@@ -7,13 +7,6 @@ import posthog from 'posthog-js';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleNavLinkClick = (linkName: string) => {
-    posthog.capture('nav_link_clicked', {
-      link_name: linkName,
-      location: 'navbar'
-    });
-  };
-
   const handleDemoRequest = () => {
     posthog.capture('demo_requested', {
       location: 'navbar'
@@ -48,13 +41,6 @@ const Navbar = () => {
           <span className="font-semibold text-lg tracking-tight text-slate-900">funky</span>
         </div>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8 text-sm text-slate-500 font-medium">
-          <a href="#" onClick={() => handleNavLinkClick('features')} className="hover:text-slate-900 transition-colors">Features</a>
-          <a href="#" onClick={() => handleNavLinkClick('methodology')} className="hover:text-slate-900 transition-colors">Methodology</a>
-          <a href="#" onClick={() => handleNavLinkClick('docs')} className="hover:text-slate-900 transition-colors">Docs</a>
-        </div>
-
         {/* CTAs */}
         <div className="hidden md:flex items-center gap-4">
           <button onClick={handleDemoRequest} className="px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all shadow-sm">
@@ -78,10 +64,6 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-slate-200 p-4 shadow-xl">
           <div className="flex flex-col gap-4">
-            <a href="#" onClick={() => handleNavLinkClick('features')} className="text-sm font-medium text-slate-600">Features</a>
-            <a href="#" onClick={() => handleNavLinkClick('methodology')} className="text-sm font-medium text-slate-600">Methodology</a>
-            <a href="#" onClick={() => handleNavLinkClick('docs')} className="text-sm font-medium text-slate-600">Docs</a>
-            <div className="h-px bg-slate-100 my-2"></div>
             <button onClick={handleDemoRequest} className="w-full px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 text-slate-600 text-center">
               Schedule a Demo
             </button>
