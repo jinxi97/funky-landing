@@ -20,6 +20,19 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## GCE VM Provisioning
+
+If you use the VM provisioning server action and polling endpoint, configure these env vars:
+
+```bash
+GCP_PROJECT_ID=your-gcp-project-id
+GCP_ZONE=us-central1-a
+GCP_MACHINE_TYPE=e2-small
+GCP_IMAGE=projects/debian-cloud/global/images/family/debian-12
+```
+
+The app relies on Google Application Default Credentials for authentication.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
