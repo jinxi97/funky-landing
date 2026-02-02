@@ -40,3 +40,18 @@ export async function upsertOpenClawdUser(data: OpenClawdUser) {
     };
   }
 }
+
+export async function getOpenClawdUserByEmail(email: string) {
+  try {
+    await ensureTableExists();
+    const poolInstance = await getPool();
+    const { rows } = await poolInstance.query(
+      `SELECT email, full_name, created_at FROM openclawd WHERE email = $1 LIMIT 1`,
+      [email]
+    );
+    return rows[0] ?? null;
+  } catch (error) {
+    console.error('Error fetching OpenClawd user:', error);
+    return null;
+  }
+}

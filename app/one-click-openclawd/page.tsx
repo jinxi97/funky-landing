@@ -1,6 +1,18 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function OneClickOpenClawdLandingPage() {
+  const router = useRouter();
+  const [isSigningIn, setIsSigningIn] = useState(false);
+
+  const handleSignInClick = () => {
+    setIsSigningIn(true);
+    router.push('/one-click-openclawd/sign-in');
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
       <div
@@ -53,10 +65,17 @@ export default function OneClickOpenClawdLandingPage() {
             </Link>
             <button
               type="button"
-              disabled
-              className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 opacity-70"
+              onClick={handleSignInClick}
+              disabled={isSigningIn}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-70"
             >
-              Sign In
+              {isSigningIn && (
+                <span
+                  aria-hidden="true"
+                  className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-slate-700"
+                />
+              )}
+              {isSigningIn ? 'Opening...' : 'Sign In'}
             </button>
           </div>
 
