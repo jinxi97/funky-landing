@@ -6,6 +6,7 @@ import { createOrGetUserVm } from '@/app/actions/vm-actions';
 import { authOptions } from '@/app/lib/auth';
 import ProvisioningStatus from '@/app/one-click-openclawd/app/ProvisioningStatus';
 import SignOutButton from '@/app/one-click-openclawd/app/SignOutButton';
+import TerminalBox from '@/app/one-click-openclawd/app/TerminalBox';
 
 export default async function OneClickOpenClawdAppPage() {
   const session = await getServerSession(authOptions);
@@ -35,6 +36,7 @@ export default async function OneClickOpenClawdAppPage() {
           Your OpenClawd workspace is ready. More controls will appear here next.
         </p>
         <ProvisioningStatus userId={session.user.email} initialResult={vmResult} />
+        <TerminalBox />
       </div>
     </main>
   );

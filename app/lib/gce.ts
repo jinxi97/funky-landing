@@ -89,3 +89,21 @@ export async function fetchInstanceStatus(params: {
     throw error;
   }
 }
+
+export async function fetchInstancePublicIp(params: {
+  projectId: string;
+  zone: string;
+  vmId: string;
+}) {
+  const { projectId, zone, vmId } = params;
+
+  const [instance] = await instancesClient.get({
+    project: projectId,
+    zone,
+    instance: vmId,
+  });
+
+  const networkInterface = instance?.networkInterfaces?.[0];
+  const accessConfig = networkInterface?.accessConfigs?.[0];
+  return accessConfig?.natIP ?? null;
+}
