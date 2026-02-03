@@ -10,11 +10,18 @@ type ConnectResponse = {
   url?: string;
 };
 
-export default function Terminal() {
+export type TerminalConnectionStatus = 'connecting' | 'connected' | 'disconnected';
+
+interface TerminalProps {
+  onStatusChange?: (status: TerminalConnectionStatus) => void;
+}
+
+export default function Terminal({ onStatusChange }: TerminalProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const terminalRef = useRef<XTerm | null>(null);
   const fitAddonRef = useRef<FitAddon | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
+  const pendingInputRef = useRef('');
 
   useEffect(() => {
     let isDisposed = false;
@@ -56,17 +63,43 @@ export default function Terminal() {
       }
     };
 
+    const sendToSocket = (data: string) => {
+      const socket = socketRef.current;
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ type: 'data', data }));
+        return true;
+      }
+      pendingInputRef.current += data;
+      return false;
+    };
+
+    const handleInjectedInput = (event: Event) => {
+      const customEvent = event as CustomEvent<{ data?: string }>;
+      const data = customEvent.detail?.data;
+      if (!data) {
+        return;
+      }
+      sendToSocket(data);
+    };
+
+    const setStatus = (status: TerminalConnectionStatus) => {
+      onStatusChange?.(status);
+    };
+
     const connect = async () => {
+      setStatus('connecting');
       try {
         const response = await fetch('/api/vm/connect', { method: 'POST' });
         if (!response.ok) {
           console.error('Failed to fetch terminal connection URL.');
+          setStatus('disconnected');
           return;
         }
 
         const data = (await response.json()) as ConnectResponse;
         if (!data.url) {
           console.error('No connection URL returned from API.');
+          setStatus('disconnected');
           return;
         }
         if (isDisposed) {
@@ -76,7 +109,15 @@ export default function Terminal() {
         const socket = new WebSocket(data.url);
         socketRef.current = socket;
 
-        socket.addEventListener('open', handleResize);
+        socket.addEventListener('open', () => {
+          setStatus('connected');
+          handleResize();
+          if (pendingInputRef.current) {
+            const queued = pendingInputRef.current;
+            pendingInputRef.current = '';
+            sendToSocket(queued);
+          }
+        });
         socket.addEventListener('message', async (event) => {
           if (!terminalRef.current) {
             return;
@@ -97,17 +138,21 @@ export default function Terminal() {
         });
         socket.addEventListener('error', (event) => {
           console.error('Terminal WebSocket error', event);
+          setStatus('disconnected');
+        });
+        socket.addEventListener('close', () => {
+          setStatus('disconnected');
         });
 
         terminal.onData((data) => {
-          if (socket.readyState === WebSocket.OPEN) {
-            socket.send(JSON.stringify({ type: 'data', data }));
-          }
+          sendToSocket(data);
         });
 
         window.addEventListener('resize', handleResize);
+        window.addEventListener('openclaw-terminal-input', handleInjectedInput);
       } catch (error) {
         console.error('Unable to connect terminal:', error);
+        setStatus('disconnected');
       }
     };
 
@@ -116,6 +161,7 @@ export default function Terminal() {
     return () => {
       isDisposed = true;
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('openclaw-terminal-input', handleInjectedInput);
       socketRef.current?.close();
       socketRef.current = null;
       terminalRef.current?.dispose();

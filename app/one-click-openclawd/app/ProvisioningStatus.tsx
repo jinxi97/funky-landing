@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
-type VmResult = {
+export type VmResult = {
   success: boolean;
   vmId?: string;
   zone?: string;
@@ -13,11 +13,13 @@ type VmResult = {
 interface ProvisioningStatusProps {
   userId: string;
   initialResult: VmResult;
+  onReadyChange?: (ready: boolean) => void;
 }
 
 export default function ProvisioningStatus({
   userId,
   initialResult,
+  onReadyChange,
 }: ProvisioningStatusProps) {
   const [pollStatus, setPollStatus] = useState<string | null>(null);
   const [pollError, setPollError] = useState<string | null>(null);
@@ -79,6 +81,18 @@ export default function ProvisioningStatus({
     }
     return 0;
   }, [pollStatus, initialResult]);
+
+  const isReady = useMemo(() => {
+    if (!initialResult?.success) {
+      return false;
+    }
+    const status = (pollStatus ?? initialResult?.status ?? '').toUpperCase();
+    return status === 'RUNNING';
+  }, [pollStatus, initialResult]);
+
+  useEffect(() => {
+    onReadyChange?.(isReady);
+  }, [isReady, onReadyChange]);
 
   if (!initialResult?.success) {
     return (

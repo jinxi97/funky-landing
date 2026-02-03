@@ -4,9 +4,8 @@ import { getServerSession } from 'next-auth';
 import { upsertOpenClawdUser } from '@/app/actions/openclawd-actions';
 import { createOrGetUserVm } from '@/app/actions/vm-actions';
 import { authOptions } from '@/app/lib/auth';
-import ProvisioningStatus from '@/app/one-click-openclawd/app/ProvisioningStatus';
 import SignOutButton from '@/app/one-click-openclawd/app/SignOutButton';
-import TerminalBox from '@/app/one-click-openclawd/app/TerminalBox';
+import WorkspacePanel from '@/app/one-click-openclawd/app/WorkspacePanel';
 
 export default async function OneClickOpenClawdAppPage() {
   const session = await getServerSession(authOptions);
@@ -35,8 +34,7 @@ export default async function OneClickOpenClawdAppPage() {
         <p className="mt-4 text-base text-slate-600">
           Your OpenClawd workspace is ready. More controls will appear here next.
         </p>
-        <ProvisioningStatus userId={session.user.email} initialResult={vmResult} />
-        <TerminalBox />
+        <WorkspacePanel userId={session.user.email} initialResult={vmResult} />
       </div>
     </main>
   );
