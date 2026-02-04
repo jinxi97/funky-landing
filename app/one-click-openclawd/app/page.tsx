@@ -2,8 +2,10 @@ import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
 import { upsertOpenClawdUser } from '@/app/actions/openclawd-actions';
+import { manageSubscription } from '@/app/actions/subscription-actions';
 import { createOrGetUserVm } from '@/app/actions/vm-actions';
 import { authOptions } from '@/app/lib/auth';
+import { getPool } from '@/app/lib/db';
 import SignOutButton from '@/app/one-click-openclawd/app/SignOutButton';
 import WorkspacePanel from '@/app/one-click-openclawd/app/WorkspacePanel';
 
@@ -20,10 +22,44 @@ export default async function OneClickOpenClawdAppPage() {
   });
 
   const vmResult = await createOrGetUserVm(session.user.email);
+  const pool = await getPool();
+  const { rows: subscriptionRows } = await pool.query(
+    `SELECT subscribed, expired_at
+     FROM user_subscriptions
+     WHERE email = $1
+     LIMIT 1`,
+    [session.user.email]
+  );
+  const subscriptionRow = subscriptionRows[0];
+  const isSubscribed = Boolean(subscriptionRow?.subscribed);
+  const expiredAt = subscriptionRow?.expired_at
+    ? new Date(subscriptionRow.expired_at)
+    : null;
+  const daysRemaining = expiredAt
+    ? Math.max(
+        0,
+        Math.ceil(
+          (expiredAt.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+        )
+      )
+    : null;
 
   return (
     <main className="min-h-screen bg-white px-6 py-10 text-slate-900">
       <div className="mx-auto flex max-w-3xl items-center justify-end">
+        {!isSubscribed && daysRemaining !== null ? (
+          <span className="mr-3 text-xs font-medium text-red-600">
+            Subscription ends in {daysRemaining} days
+          </span>
+        ) : null}
+        <form action={manageSubscription}>
+          <button
+            type="submit"
+            className="mr-3 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+          >
+            Manage subscription
+          </button>
+        </form>
         <SignOutButton />
       </div>
       <div className="mx-auto mt-10 max-w-3xl">
