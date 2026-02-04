@@ -117,19 +117,34 @@ export async function handleInvoicePaymentFailed(customerId: string) {
   console.log('Stripe invoice.payment_failed', { customerId });
 }
 
-export async function handleSubscriptionUpdated(
+export async function handleSubscriptionCanceled(
   customerId: string,
-  isCanceled: boolean
+  cancelAt: number
 ) {
   await ensureUserSubscriptionsTable();
   const pool = await getPool();
 
   await pool.query(
     `UPDATE user_subscriptions
-     SET subscribed = $2
+     SET subscribed = FALSE,
+         expired_at = to_timestamp($2::bigint)
      WHERE stripe_customer_id = $1`,
-    [customerId, !isCanceled]
+    [customerId, cancelAt]
   );
+}
 
-  console.log('Stripe customer.subscription.updated', { customerId, isCanceled });
+export async function handleSubscriptionResumed(
+  customerId: string,
+  trialEnd: number
+) {
+  await ensureUserSubscriptionsTable();
+  const pool = await getPool();
+
+  await pool.query(
+    `UPDATE user_subscriptions
+     SET subscribed = TRUE,
+         expired_at = to_timestamp($2::bigint)
+     WHERE stripe_customer_id = $1`,
+    [customerId, trialEnd]
+  );
 }

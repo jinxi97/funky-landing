@@ -2,7 +2,8 @@ import Stripe from "stripe";
 import {
   handleInvoicePaymentFailed,
   handleInvoicePaymentSucceeded,
-  handleSubscriptionUpdated,
+  handleSubscriptionCanceled,
+  handleSubscriptionResumed,
 } from "../../lib/user-subscriptions";
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
@@ -58,19 +59,15 @@ export async function POST(req: Request) {
       const subscription = event.data.object as Stripe.Subscription;
       const customerId =
         typeof subscription.customer === "string" ? subscription.customer : null;
-      const isCanceled =
-        subscription.status === "canceled" ||
-        subscription.cancel_at_period_end === true ||
-        Boolean(subscription.cancel_at) ||
-        subscription.cancellation_details?.reason === "cancellation_requested" ||
-        Boolean(subscription.canceled_at) ||
-        Boolean(subscription.ended_at);
 
       console.log("Stripe webhook: customer.subscription.updated", subscription);
-      console.log("Stripe webhook: customer.subscription.updated", { customerId, isCanceled });
 
-      if (customerId) {
-        await handleSubscriptionUpdated(customerId, isCanceled);
+      if (subscription.cancel_at && customerId) {
+        await handleSubscriptionCanceled(customerId, subscription.cancel_at);
+      }
+
+      if (!subscription.cancel_at && subscription.trial_end && customerId) {
+        await handleSubscriptionResumed(customerId, subscription.trial_end);
       }
       break;
     }

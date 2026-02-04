@@ -46,20 +46,30 @@ export default async function OneClickOpenClawdAppPage() {
 
   return (
     <main className="min-h-screen bg-white px-6 py-10 text-slate-900">
-      <div className="mx-auto flex max-w-3xl items-center justify-end">
-        {!isSubscribed && daysRemaining !== null ? (
-          <span className="mr-3 text-xs font-medium text-red-600">
-            Subscription ends in {daysRemaining} days
-          </span>
-        ) : null}
-        <form action={manageSubscription}>
-          <button
-            type="submit"
-            className="mr-3 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
-          >
-            Manage subscription
-          </button>
-        </form>
+      <div className="mx-auto flex max-w-3xl items-start justify-end gap-3">
+        <a
+          href="https://discord.gg/uuYSaAUZc9"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+        >
+          Customer support
+        </a>
+        <div className="flex flex-col items-end">
+          <form action={manageSubscription}>
+            <button
+              type="submit"
+              className="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+            >
+              Manage subscription
+            </button>
+          </form>
+          {!isSubscribed && daysRemaining !== null ? (
+            <span className="mt-1 text-xs font-medium text-red-600">
+              Subscription ends in {daysRemaining} days
+            </span>
+          ) : null}
+        </div>
         <SignOutButton />
       </div>
       <div className="mx-auto mt-10 max-w-3xl">
