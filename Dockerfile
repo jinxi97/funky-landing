@@ -18,7 +18,15 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build the Next.js app
+# build stage
+ARG GOOGLE_CLIENT_ID
+ARG GOOGLE_CLIENT_SECRET
+ARG STRIPE_PRICE_ID
+ARG STRIPE_SECRET_KEY
+ENV GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+ENV GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+ENV STRIPE_PRICE_ID=$STRIPE_PRICE_ID
+ENV STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY
 RUN npm run build
 
 # Production image, copy all the files and run next
