@@ -1,5 +1,6 @@
 steps:
   - name: gcr.io/cloud-builders/docker
+    secretEnv: ["GOOGLE_CLIENT_SECRET", "STRIPE_SECRET_KEY"]
     args:
       - build
       - '--no-cache'
