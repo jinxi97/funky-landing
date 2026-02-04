@@ -14,7 +14,7 @@ steps:
       - "--build-arg"
       - "STRIPE_SECRET_KEY=$$STRIPE_SECRET_KEY"
       - "--build-arg"
-      - "STRIPE_PRICE_ID=price_1SwYZY2d03SkiwcpZ4pw3tiW"
+      - "STRIPE_PRICE_ID=price_1SxAY1GsEWhVvfBlrj6Nc6gM"
       - .
       - '-f'
       - Dockerfile
