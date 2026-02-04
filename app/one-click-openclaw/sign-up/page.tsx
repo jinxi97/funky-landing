@@ -32,11 +32,11 @@ export default function OneClickOpenClawdSignUpPage() {
       <main className="relative z-10">
         <div className="mx-auto flex min-h-screen max-w-lg flex-col items-center justify-center px-6 py-16 text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-medium text-slate-600">
-            One-click OpenClawd
+            One-click OpenClaw
           </div>
 
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Create your OpenClawd account
+            Create your OpenClaw account
           </h1>
           <p className="mt-3 text-sm text-slate-600 sm:text-base">
             Continue with Google to provision your secure, isolated workspace.
@@ -44,7 +44,7 @@ export default function OneClickOpenClawdSignUpPage() {
 
           <button
             type="button"
-            onClick={() => signIn('google', { callbackUrl: '/one-click-openclawd/app' })}
+            onClick={() => signIn('google', { callbackUrl: '/one-click-openclaw/app' })}
             className="mt-8 inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50"
           >
             Continue with Google

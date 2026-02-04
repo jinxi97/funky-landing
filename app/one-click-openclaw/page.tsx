@@ -10,7 +10,7 @@ export default function OneClickOpenClawdLandingPage() {
 
   const handleSignInClick = () => {
     setIsSigningIn(true);
-    router.push('/one-click-openclawd/sign-in');
+    router.push('/one-click-openclaw/sign-in');
   };
 
   return (
@@ -42,23 +42,23 @@ export default function OneClickOpenClawdLandingPage() {
       <main className="relative z-10">
         <div className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-6 py-16 text-center">
           <div className="mb-10 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-medium text-slate-600">
-            One-click OpenClawd
+            One-click OpenClaw
             <span className="rounded-full bg-emerald-100 px-2 py-1 text-[10px] font-semibold text-emerald-700">
               New
             </span>
           </div>
 
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            Launch OpenClawd in a secure, isolated environment.
+            Launch OpenClaw in a secure, isolated environment.
           </h1>
           <p className="mt-4 max-w-2xl text-base text-slate-600 sm:text-lg">
-            Provision your OpenClawd remotely with a single click. We spin up a private workspace
+            Provision your OpenClaw remotely with a single click. We spin up a private workspace
             that keeps your data isolated, your sessions secure, and your setup effortless.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/one-click-openclawd/sign-up"
+              href="/one-click-openclaw/sign-up"
               className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
             >
               Get Started
@@ -87,7 +87,7 @@ export default function OneClickOpenClawdLandingPage() {
             <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
               <h3 className="text-sm font-semibold">Isolated workspace</h3>
               <p className="mt-2 text-sm text-slate-600">
-                Each OpenClawd runs in a dedicated environment to keep your data separate.
+                Each OpenClaw runs in a dedicated environment to keep your data separate.
               </p>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -99,7 +99,7 @@ export default function OneClickOpenClawdLandingPage() {
             <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
               <h3 className="text-sm font-semibold">Remote, ready fast</h3>
               <p className="mt-2 text-sm text-slate-600">
-                Provision a fresh OpenClawd in minutes without managing infrastructure.
+                Provision a fresh OpenClaw in minutes without managing infrastructure.
               </p>
             </div>
           </div>

@@ -24,7 +24,7 @@ export async function manageSubscription() {
   const email = session?.user?.email;
 
   if (!email) {
-    redirect('/one-click-openclawd/sign-up');
+    redirect('/one-click-openclaw/sign-up');
   }
 
   const pool = await getPool();
@@ -46,7 +46,16 @@ export async function manageSubscription() {
 
   const origin = (await headers()).get('origin');
   const baseUrl = origin ?? process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
-  const returnUrl = `${baseUrl}/one-click-openclawd/app`;
+  const returnUrl = `${baseUrl}/one-click-openclaw/app`;
+
+  if (subscribed) {
+    const portalSession = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: returnUrl
+    });
+
+    redirect(portalSession.url);
+  }
 
   const subscriptions = await stripe.subscriptions.list({
     customer: customerId,

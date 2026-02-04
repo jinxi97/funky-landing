@@ -8,7 +8,7 @@ export default function SignOutButton() {
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
-    await signOut({ callbackUrl: '/one-click-openclawd' });
+    await signOut({ callbackUrl: '/one-click-openclaw' });
   };
 
   return (

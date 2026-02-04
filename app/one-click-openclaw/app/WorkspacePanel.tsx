@@ -4,8 +4,8 @@ import { useState } from 'react';
 
 import ProvisioningStatus, {
   type VmResult,
-} from '@/app/one-click-openclawd/app/ProvisioningStatus';
-import TerminalBox from '@/app/one-click-openclawd/app/TerminalBox';
+} from '@/app/one-click-openclaw/app/ProvisioningStatus';
+import TerminalBox from '@/app/one-click-openclaw/app/TerminalBox';
 
 interface WorkspacePanelProps {
   userId: string;
@@ -45,7 +45,7 @@ export default function WorkspacePanel({ userId, initialResult }: WorkspacePanel
           <TerminalBox />
           <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
             <h2 className="text-base font-semibold text-slate-900">
-              OpenClawd onboarding checklist
+              OpenClaw onboarding checklist
             </h2>
             <p className="mt-1 text-xs text-slate-500">
               Follow these prompts in the terminal.
