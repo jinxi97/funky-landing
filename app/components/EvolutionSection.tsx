@@ -1,109 +1,73 @@
 'use client';
 
-import React, { useState } from 'react';
-import { BookOpen, Terminal } from 'lucide-react';
+import React from 'react';
+import { BarChart2, Wrench, ShieldCheck, ArrowRight } from 'lucide-react';
 
-const EvolutionSection = () => {
-  const [activeTab, setActiveTab] = useState<'terminal' | 'python'>('terminal');
+const steps = [
+  {
+    number: '1',
+    icon: <BarChart2 size={20} />,
+    iconStyle: 'bg-blue-50 border-blue-100 text-blue-600',
+    title: 'Measure',
+    description:
+      'Define metrics and instrument your workspace. Collect data across agent runs — success rates, latency, task completion, and more.',
+  },
+  {
+    number: '2',
+    icon: <Wrench size={20} />,
+    iconStyle: 'bg-purple-50 border-purple-100 text-purple-600',
+    title: 'Patch',
+    description:
+      "Extract insights from your metrics. Identify what's failing and apply targeted patches to scripts, prompts, or dependencies.",
+  },
+  {
+    number: '3',
+    icon: <ShieldCheck size={20} />,
+    iconStyle: 'bg-green-50 border-green-100 text-green-600',
+    title: 'Verify',
+    description:
+      'Validate every improvement before it ships. Compare against historical baselines or run a canary instance side by side.',
+  },
+];
 
-  return (
-    <section className="py-24 relative border-t border-slate-200 bg-slate-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          
-          {/* Content */}
-          <div>
-            <h2 className="text-3xl font-bold mb-6 text-slate-900">Self-Healing, Self-Evolving.</h2>
-            <p className="text-slate-600 text-lg leading-relaxed mb-8">
-              Traditional agents fail when they lack a tool. Funky agents realize the gap, write a Python script to fix it, and execute it immediately.
-            </p>
-            
-            <ul className="space-y-6">
-              <li className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-blue-600 shrink-0 bg-white border border-slate-200 shadow-sm">
-                  <BookOpen size={18} />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-slate-900 mb-1">Markdown as Documentation</h3>
-                  <p className="text-sm text-slate-500">No system prompts. Agents read `skills.md` like a human developer.</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-purple-600 shrink-0 bg-white border border-slate-200 shadow-sm">
-                  <Terminal size={18} />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-slate-900 mb-1">Full Shell Access</h3>
-                  <p className="text-sm text-slate-500">Real `python`, `curl`, and `grep`. If it runs in linux, your agent can use it.</p>
-                </div>
-              </li>
-            </ul>
-          </div>
+const EvolutionSection = () => (
+  <section className="py-24 bg-slate-50 border-t border-slate-200">
+    <div className="max-w-7xl mx-auto px-6">
 
-          {/* Code Visual with Tabs */}
-          <div className="relative">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-300 to-purple-300 rounded-xl blur opacity-30"></div>
-            <div className="relative bg-slate-900 rounded-xl border border-slate-800 shadow-2xl overflow-hidden font-mono text-sm">
-              <div className="flex items-center px-4 py-3 bg-slate-800 border-b border-slate-700">
-                <div className="flex gap-4 text-xs font-mono">
-                  <button
-                    onClick={() => setActiveTab('terminal')}
-                    className={`pb-2.5 -mb-3 transition-colors ${
-                      activeTab === 'terminal'
-                        ? 'text-white border-b-2 border-blue-500'
-                        : 'text-slate-500 hover:text-slate-300'
-                    }`}
-                  >
-                    terminal
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('python')}
-                    className={`pb-2.5 -mb-3 transition-colors ${
-                      activeTab === 'python'
-                        ? 'text-white border-b-2 border-blue-500'
-                        : 'text-slate-500 hover:text-slate-300'
-                    }`}
-                  >
-                    convert_temp.py
-                  </button>
-                </div>
-              </div>
-              <div className="p-6 bg-[#0f172a] text-slate-300">
-                {activeTab === 'terminal' ? (
-                  <div>
-                    <div className="mb-2"><span className="text-blue-400">$</span> cat skills.md</div>
-                    <div className="text-slate-400 mb-3">&gt; Available tools: get_weather.py</div>
-                    
-                    <div className="mb-2"><span className="text-blue-400">$</span> <span> echo "import sys..." {'>'} convert_temp.py</span></div>
-                    
-                    <div className="mb-2"><span className="text-blue-400">$</span> python convert_temp.py 72</div>
-                    <div className="text-green-400">&gt; 72°F = 22.2°C</div>
-                  </div>
-                ) : (
-                  <div className="flex gap-4">
-                    <div className="text-slate-600 select-none text-right">
-                      1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9
-                    </div>
-                    <div>
-                      <span className="text-pink-400">import</span> sys<br/>
-                      <br/>
-                      <span className="text-pink-400">def</span> <span className="text-purple-400">convert</span>(fahrenheit):<br/>
-                      &nbsp;&nbsp;celsius = (fahrenheit - <span className="text-amber-400">32</span>) * <span className="text-amber-400">5</span> / <span className="text-amber-400">9</span><br/>
-                      &nbsp;&nbsp;<span className="text-pink-400">return</span> <span className="text-sky-300">f"{`{fahrenheit}`}°F = {`{celsius:.1f}`}°C"</span><br/>
-                      <br/>
-                      temp = <span className="text-purple-400">float</span>(sys.argv[<span className="text-amber-400">1</span>])<br/>
-                      <span className="text-purple-400">print</span>(convert(temp))
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-        </div>
+      <div className="text-center mb-14">
+        <h2 className="text-3xl font-bold text-slate-900 mb-4">
+          Evolve your workspace. Stay in control.
+        </h2>
+        <p className="text-slate-500 max-w-xl mx-auto">
+          Funky closes the loop between observation and improvement — so your
+          workspace evolves as fast as your use cases do.
+        </p>
       </div>
-    </section>
-  );
-};
+
+      <div className="flex flex-col md:flex-row items-stretch gap-6 md:gap-3">
+        {steps.map((step, idx) => (
+          <React.Fragment key={step.number}>
+            <div className="flex-1 relative bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <div className="absolute -top-3.5 left-5 w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold shadow-md">
+                {step.number}
+              </div>
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${step.iconStyle} mb-4 mt-1`}>
+                {step.icon}
+              </div>
+              <h3 className="font-bold text-slate-900 mb-2">{step.title}</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">{step.description}</p>
+            </div>
+            {idx < steps.length - 1 && (
+              <div className="hidden md:flex items-center justify-center text-slate-300 flex-shrink-0 px-1">
+                <ArrowRight size={18} />
+              </div>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+
+    </div>
+  </section>
+);
 
 export default EvolutionSection;

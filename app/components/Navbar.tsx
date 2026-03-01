@@ -48,12 +48,6 @@ const Navbar = () => {
 
         {/* CTAs */}
         <div className="hidden md:flex items-center gap-4">
-          <Link
-            href="/one-click-openclaw"
-            className="px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-          >
-            One-click OpenClaw
-          </Link>
           <button onClick={handleDemoRequest} className="px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all shadow-sm">
             Schedule a Demo
           </button>
@@ -75,12 +69,6 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-slate-200 p-4 shadow-xl">
           <div className="flex flex-col gap-4">
-            <Link
-              href="/one-click-openclaw"
-              className="w-full px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 text-slate-600 text-center"
-            >
-              One-click OpenClaw
-            </Link>
             <button onClick={handleDemoRequest} className="w-full px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 text-slate-600 text-center">
               Schedule a Demo
             </button>

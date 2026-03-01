@@ -1,6 +1,6 @@
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import HowItWorks from './components/HowItWorks';
+import MoveInReady from './components/MoveInReady';
 import EvolutionSection from './components/EvolutionSection';
 import Footer from './components/Footer';
 
@@ -33,7 +33,7 @@ export default function LandingPage() {
         <Navbar />
         <main>
           <Hero />
-          <HowItWorks />
+          <MoveInReady />
           <EvolutionSection />
         </main>
         <Footer />
