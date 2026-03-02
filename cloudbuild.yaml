@@ -1,6 +1,6 @@
 steps:
   - name: gcr.io/cloud-builders/docker
-    secretEnv: ["GOOGLE_CLIENT_SECRET", "STRIPE_SECRET_KEY"]
+    secretEnv: ["POSTHOG_KEY"]
     args:
       - build
       - '--no-cache'
@@ -8,13 +8,9 @@ steps:
       - >-
         $_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
       - "--build-arg"
-      - "GOOGLE_CLIENT_ID=819221826816-lclugm0rj3udse60vjmelf4jophnu7mk.apps.googleusercontent.com"
+      - "NEXT_PUBLIC_POSTHOG_KEY=$$POSTHOG_KEY"
       - "--build-arg"
-      - "GOOGLE_CLIENT_SECRET=$$GOOGLE_CLIENT_SECRET"
-      - "--build-arg"
-      - "STRIPE_SECRET_KEY=$$STRIPE_SECRET_KEY"
-      - "--build-arg"
-      - "STRIPE_PRICE_ID=price_1SxAY1GsEWhVvfBlrj6Nc6gM"
+      - "NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com"
       - .
       - '-f'
       - Dockerfile
@@ -62,7 +58,5 @@ tags:
   - funky-landing
 availableSecrets:
   secretManager:
-    - versionName: "projects/$PROJECT_ID/secrets/google_client_secret/versions/latest"
-      env: "GOOGLE_CLIENT_SECRET"
-    - versionName: "projects/$PROJECT_ID/secrets/stripe_secret_key/versions/latest"
-      env: "STRIPE_SECRET_KEY"
+    - versionName: "projects/819221826816/secrets/posthog_key/versions/latest"
+      env: "POSTHOG_KEY"
