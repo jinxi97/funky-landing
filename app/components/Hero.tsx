@@ -62,8 +62,7 @@ const Hero = () => {
         </h1>
 
         <p className="text-lg md:text-xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">
-          Funky replaces rigid tool chains with a fluid filesystem. <br className="hidden md:block" />
-          Give your agents a shell, a directory, and the autonomy to evolve.
+          A persistent, pre-configured environment where AI agents work, store state, and fork tasks.
         </p>
 
         {/* CTA Buttons */}
