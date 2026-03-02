@@ -1,6 +1,9 @@
 'use server';
 
 import { getPool } from '../lib/db';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const ensureTableExists = async () => {
   const poolInstance = await getPool();
@@ -35,12 +38,24 @@ export async function saveInvitationRequest(data: InvitationRequest) {
       [data.email, data.fullName, data.referralSource]
     );
 
+    // Send notification email
+    await resend.emails.send({
+      from: 'Funky Notification <notification@funky.dev>',
+      to: 'jason@funky.dev',
+      subject: `New invitation request from ${data.fullName}`,
+      html: `
+        <p><strong>Name:</strong> ${data.fullName}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Referral source:</strong> ${data.referralSource || '—'}</p>
+      `,
+    });
+
     return { success: true };
   } catch (error) {
     console.error('Error saving invitation request:', error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : 'Unknown error occurred' 
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error occurred'
     };
   }
 }

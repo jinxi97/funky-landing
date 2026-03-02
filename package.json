@@ -23,6 +23,7 @@
     "posthog-js": "^1.336.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "resend": "^6.9.3",
     "stripe": "^20.3.0"
   },
   "devDependencies": {
