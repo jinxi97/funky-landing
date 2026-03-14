@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
         source: "/ingest/:path*",
         destination: "https://us.i.posthog.com/:path*",
       },
+      {
+        source: "/demo/slides-agent",
+        destination: "https://slides-agent-client-819221826816.us-central1.run.app/",
+      },
+      {
+        source: "/demo/slides-agent/:path*",
+        destination: "https://slides-agent-client-819221826816.us-central1.run.app/:path*",
+      },
     ];
   },
   // This is required to support PostHog trailing slash API requests
